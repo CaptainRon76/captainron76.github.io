@@ -17,48 +17,33 @@ function loadJSON(callback) {
 // Load the JSON file and assign the data to the triviaData variable
 loadJSON(function(data) {
 	triviaData = data;
-	var numberOfQuestions = 5; // Change the number of questions here
-	displayQuestion(numberOfQuestions);
 });
 
 var currentQuestion = 0;
 var score = 0;
+var totalQuestions = 0;
+
+function initializeQuiz(numberOfQuestions) {
+	totalQuestions = triviaData.length;
+	displayQuestion(numberOfQuestions);
+}
 
 function displayQuestion(n) {
 	var questionContainer = document.getElementById("question");
 	var optionsContainer = document.getElementById("options");
 
-	// Randomly select 'n' questions from triviaData
-	var randomQuestions = getRandomQuestions(triviaData, n);
+	if (currentQuestion < totalQuestions) {
+		var questionData = triviaData[currentQuestion];
+		questionContainer.innerHTML = questionData.question;
+		optionsContainer.innerHTML = "";
 
-	// Get the current question data from randomQuestions array
-	var questionData = randomQuestions[currentQuestion];
-
-	questionContainer.innerHTML = questionData.question;
-	optionsContainer.innerHTML = "";
-
-	for (var i = 0; i < questionData.options.length; i++) {
-		var option = document.createElement("button");
-		option.innerHTML = questionData.options[i];
-		option.addEventListener("click", checkAnswer);
-		optionsContainer.appendChild(option);
+		for (var i = 0; i < questionData.options.length; i++) {
+			var option = document.createElement("button");
+			option.innerHTML = questionData.options[i];
+			option.addEventListener("click", checkAnswer);
+			optionsContainer.appendChild(option);
+		}
 	}
-}
-
-function getRandomQuestions(array, n) {
-	// Create a copy of the array to avoid modifying the original array
-	var newArray = array.slice();
-
-	// Randomly shuffle the array
-	for (var i = newArray.length - 1; i > 0; i--) {
-		var j = Math.floor(Math.random() * (i + 1));
-		var temp = newArray[i];
-		newArray[i] = newArray[j];
-		newArray[j] = temp;
-	}
-
-	// Return the first 'n' elements
-	return newArray.slice(0, n);
 }
 
 function checkAnswer(event) {
@@ -74,16 +59,16 @@ function checkAnswer(event) {
 
 	currentQuestion++;
 
-	if (currentQuestion < triviaData.length) {
+	if (currentQuestion < totalQuestions) {
 		displayQuestion();
 	} else {
 		document.getElementById("question").innerHTML = "Quiz completed!";
 		document.getElementById("options").innerHTML = "";
 		document.getElementById("submit").style.display = "none";
 		document.getElementById("result").innerHTML = "";
-		document.getElementById("score").innerHTML = "Your score: " + score + " out of " + triviaData.length;
+		document.getElementById("score").innerHTML = "Your score: " + score + " out of " + totalQuestions;
 	}
 }
 
 // Change the argument to specify the desired number of questions
-displayQuestion(10)
+initializeQuiz(10);
