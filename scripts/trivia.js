@@ -59,7 +59,6 @@ function checkAnswer(event) {
     } else {
 	document.getElementById("question").innerHTML = "Quiz completed!";
 	document.getElementById("options").innerHTML = "";
-	document.getElementById("submit").style.display = "none";
 	document.getElementById("result").innerHTML = "";
 	document.getElementById("score").innerHTML = "Your score: " + score + " out of " + triviaData.length;
     }
