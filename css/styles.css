@@ -51,25 +51,13 @@ button:hover {
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 20px;
+    color: black;
 }
 
 #score {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
-}
-#logo-top-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 130px;
-}
-
-#logo-top-right {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 130px;
 }
 
 #logo {
