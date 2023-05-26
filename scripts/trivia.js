@@ -2,7 +2,7 @@
 var triviaData;
 
 function loadJSON(callback) {
-	fetch('oilers.json')
+	fetch('../oilers.json')
 	.then(response => response.json())
 	.then(data => callback(data))
 	.catch(error => console.error('Error loading trivia data:', error));
