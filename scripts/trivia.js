@@ -1,14 +1,22 @@
 // Trivia questions and answers
 var triviaData;
 
+var triviaData;
+
+// Function to load the JSON file
 function loadJSON(callback) {
-	fetch('../oilers.json')
-	.then(response => response.json())
-	.then(data => callback(data))
-	.catch(error => console.error('Error loading trivia data:', error));
+	var xobj = new XMLHttpRequest();
+	xobj.overrideMimeType("application/json");
+	xobj.open("GET", "/oilers.json", true);
+	xobj.onreadystatechange = function() {
+		if (xobj.readyState === 4 && xobj.status === 200) {
+			callback(JSON.parse(xobj.responseText));
+		}
+	};
+	xobj.send(null);
 }
 
-// Load the JSON data and assign it to the triviaData variable
+// Load the JSON file and assign the data to the triviaData variable
 loadJSON(function(data) {
 	triviaData = data;
 	displayQuestion();
